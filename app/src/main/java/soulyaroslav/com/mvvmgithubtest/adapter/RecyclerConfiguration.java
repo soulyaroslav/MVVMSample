@@ -13,12 +13,14 @@ public class RecyclerConfiguration extends BaseObservable {
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.ItemAnimator itemAnimator;
     private RecyclerView.Adapter adapter;
+    private RecyclerView.OnScrollListener onScrollListener;
 
     @BindingAdapter("app:configuration")
     public static void configureRecyclerView(RecyclerView recyclerView, RecyclerConfiguration configuration) {
         recyclerView.setLayoutManager(configuration.getLayoutManager());
         recyclerView.setItemAnimator(configuration.getItemAnimator());
         recyclerView.setAdapter(configuration.getAdapter());
+        recyclerView.addOnScrollListener(configuration.getOnScrollListener());
     }
 
     public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
@@ -27,6 +29,10 @@ public class RecyclerConfiguration extends BaseObservable {
 
     public void setItemAnimator(RecyclerView.ItemAnimator itemAnimator) {
         this.itemAnimator = itemAnimator;
+    }
+
+    public void setOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
+        this.onScrollListener = onScrollListener;
     }
 
     public void setAdapter(RecyclerView.Adapter adapter) {
@@ -43,5 +49,9 @@ public class RecyclerConfiguration extends BaseObservable {
 
     public RecyclerView.Adapter getAdapter() {
         return adapter;
+    }
+
+    public RecyclerView.OnScrollListener getOnScrollListener() {
+        return onScrollListener;
     }
 }

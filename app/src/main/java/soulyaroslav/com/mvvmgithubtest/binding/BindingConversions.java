@@ -13,6 +13,6 @@ public final class BindingConversions {
 
     @BindingConversion
     public static int convertBooleanToVisibility(boolean visible) {
-        return visible ? View.VISIBLE : View.GONE;
+        return visible ? View.GONE : View.VISIBLE;
     }
 }

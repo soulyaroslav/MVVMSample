@@ -2,11 +2,14 @@ package soulyaroslav.com.mvvmgithubtest.views.login;
 
 import android.content.Intent;
 import android.databinding.ObservableBoolean;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
+import soulyaroslav.com.mvvmgithubtest.R;
 import soulyaroslav.com.mvvmgithubtest.Utils.Constants;
 import soulyaroslav.com.mvvmgithubtest.rest.request.LoginRequest;
 import soulyaroslav.com.mvvmgithubtest.views.ActivityViewModel;
+import soulyaroslav.com.mvvmgithubtest.views.fragment.TestFragment;
 import soulyaroslav.com.mvvmgithubtest.views.profile.ProfileActivity;
 
 /**
@@ -37,9 +40,17 @@ public class LoginViewModel extends ActivityViewModel<LoginActivity> {
     }
 
     private void login(){
-        Intent intent = new Intent(getActivity(), ProfileActivity.class);
-        intent.putExtra(Constants.CREDENTIALS_BUNDLE_KEY, getLoginRequest().getName());
-        getActivity().startActivity(intent);
+//        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+//        intent.putExtra(Constants.CREDENTIALS_BUNDLE_KEY, getLoginRequest().getName());
+//        getActivity().startActivity(intent);
+
+        FragmentTransaction transition = getActivity().getSupportFragmentManager().beginTransaction();
+        transition.replace(R.id.container, TestFragment.getInstance("3"));
+        transition.commit();
+    }
+
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+//        Toast.makeText(getActivity(), "text - " + s, Toast.LENGTH_SHORT).show();
     }
 
     public LoginRequest getLoginRequest() {

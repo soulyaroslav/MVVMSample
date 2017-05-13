@@ -1,9 +1,10 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
+        <import type="java.lang.String"/>
         <variable
             name="repo"
-            type="soulyaroslav.com.mvvmgithubtest.rest.response.Repos" />
+            type="soulyaroslav.com.mvvmgithubtest.views.profile.RepoItem" />
     </data>
 
     <RelativeLayout
@@ -21,7 +22,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/background_dark"
                 android:textSize="16sp"
-                android:text="@{repo.name}"/>
+                android:text="@{repo.repo.name}"
+                android:onClick="@{repo::onTitleClick}"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -35,7 +37,7 @@
                     android:layout_weight="1"
                     android:textSize="14sp"
                     android:textColor="@android:color/darker_gray"
-                    android:text="@{repo.language}"/>
+                    android:text="@{repo.repo.language}"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -43,8 +45,8 @@
                     android:layout_weight="1"
                     android:textSize="14sp"
                     android:gravity="right"
-                    android:textColor="@android:color/darker_gray"
-                    android:text="@{repo.branch}"/>
+                    android:text="@{repo.repo.branch}"
+                    android:textColor="@android:color/darker_gray" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

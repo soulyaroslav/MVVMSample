@@ -20,15 +20,10 @@ public class RecyclerBindingAdapter<T> extends RecyclerView.Adapter<RecyclerBind
     private int holderLayout;
     private int variableId;
     private AbstractList<T> items = new ArrayList<>();
-    private OnItemClickListener<T> listener;
 
     public RecyclerBindingAdapter(int holderLayout, int variableId) {
         this.holderLayout = holderLayout;
         this.variableId = variableId;
-    }
-
-    public interface OnItemClickListener<T> {
-        void onItemClick(int position, T item);
     }
 
     @Override
@@ -40,14 +35,14 @@ public class RecyclerBindingAdapter<T> extends RecyclerView.Adapter<RecyclerBind
     @Override
     public void onBindViewHolder(BindingViewHolder holder, final int position) {
         final T item = items.get(position);
-        holder.getBinding().getRoot().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(listener != null) {
-                    listener.onItemClick(position, item);
-                }
-            }
-        });
+//        holder.getBinding().getRoot().setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(listener != null) {
+//                    listener.onItemClick(position, item);
+//                }
+//            }
+//        });
         holder.getBinding().setVariable(variableId, item);
     }
 
@@ -60,10 +55,6 @@ public class RecyclerBindingAdapter<T> extends RecyclerView.Adapter<RecyclerBind
         this.items.clear();
         this.items.addAll(items);
         notifyDataSetChanged();
-    }
-
-    public void setListener(OnItemClickListener<T> listener) {
-        this.listener = listener;
     }
 
     public static class BindingViewHolder extends RecyclerView.ViewHolder {

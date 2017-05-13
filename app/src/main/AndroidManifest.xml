@@ -19,6 +19,9 @@
 
         <activity android:name=".views.profile.ProfileActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".views.list.ListActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

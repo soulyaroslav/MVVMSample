@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MVVMGIthubTest</string>
     <string name="login_btn_title">Login</string>
+    <item type="id" name="entryListener"/>
 </resources>
