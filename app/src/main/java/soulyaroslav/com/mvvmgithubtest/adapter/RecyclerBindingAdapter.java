@@ -7,19 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
+
+import soulyaroslav.com.mvvmgithubtest.Utils.recycler.ListBinder;
 
 /**
  * Created by yaroslav on 3/24/17.
  */
 
-public class RecyclerBindingAdapter<T> extends RecyclerView.Adapter<RecyclerBindingAdapter.BindingViewHolder>{
+public class RecyclerBindingAdapter<E> extends RecyclerView.Adapter<RecyclerBindingAdapter.BindingViewHolder>
+        implements ListBinder.OnUpdateAdapterContent<E> {
 
     private int holderLayout;
     private int variableId;
-    private AbstractList<T> items = new ArrayList<>();
+    private List<E> items = new ArrayList<>();
 
     public RecyclerBindingAdapter(int holderLayout, int variableId) {
         this.holderLayout = holderLayout;
@@ -34,15 +36,7 @@ public class RecyclerBindingAdapter<T> extends RecyclerView.Adapter<RecyclerBind
 
     @Override
     public void onBindViewHolder(BindingViewHolder holder, final int position) {
-        final T item = items.get(position);
-//        holder.getBinding().getRoot().setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if(listener != null) {
-//                    listener.onItemClick(position, item);
-//                }
-//            }
-//        });
+        final E item = items.get(position);
         holder.getBinding().setVariable(variableId, item);
     }
 
@@ -51,10 +45,9 @@ public class RecyclerBindingAdapter<T> extends RecyclerView.Adapter<RecyclerBind
         return items.size();
     }
 
-    public void setContent(List<T> items){
-        this.items.clear();
-        this.items.addAll(items);
-        notifyDataSetChanged();
+    @Override
+    public void onUpdateContent(List<E> data) {
+        this.items = data;
     }
 
     public static class BindingViewHolder extends RecyclerView.ViewHolder {

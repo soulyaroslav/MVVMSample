@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import rx.Observer;
 import soulyaroslav.com.mvvmgithubtest.BR;
 import soulyaroslav.com.mvvmgithubtest.R;
 import soulyaroslav.com.mvvmgithubtest.Utils.Constants;
+import soulyaroslav.com.mvvmgithubtest.Utils.recycler.ListBinder;
 import soulyaroslav.com.mvvmgithubtest.adapter.RecyclerBindingAdapter;
 import soulyaroslav.com.mvvmgithubtest.adapter.RecyclerConfiguration;
 import soulyaroslav.com.mvvmgithubtest.rest.response.LoginResponse;
@@ -37,6 +39,8 @@ public class ProfileViewModel extends ActivityViewModel<ProfileActivity> impleme
     private ObservableBoolean isLoaded = new ObservableBoolean(false);
     private RecyclerConfiguration configuration = new RecyclerConfiguration();
     private RecyclerBindingAdapter<RepoItem> adapter;
+    private ListBinder<RepoItem> listBinder;
+    private ArrayList<RepoItem> repoItems = new ArrayList<>();
 
     public ProfileViewModel(ProfileActivity activity) {
         super(activity);
@@ -46,6 +50,7 @@ public class ProfileViewModel extends ActivityViewModel<ProfileActivity> impleme
     private void init(){
         this.bundle = getActivity().getBundle();
         profileModel = new ProfileModel();
+        listBinder = new ListBinder<>(new MyDiffCallback());
         initRecycler();
     }
 
@@ -121,16 +126,27 @@ public class ProfileViewModel extends ActivityViewModel<ProfileActivity> impleme
             @Override
             public void onNext(List<Repos> reposes) {
                 isLoaded.set(true);
-                List<RepoItem> repoItems = new ArrayList<>();
+                repoItems = new ArrayList<>();
                 for(int i = 0; i < reposes.size(); i++) {
                     Repos repos = reposes.get(i);
                     RepoItem repoItem = new RepoItem(repos);
                     repoItem.setOnItemClickListener(ProfileViewModel.this);
                     repoItems.add(repoItem);
                 }
-                adapter.setContent(repoItems);
+                listBinder.notifyDataChange(repoItems);
             }
         });
+    }
+
+    public void addItem(View view) {
+        Repos repos = new Repos();
+        repos.setName("Test");
+        repos.setLanguage("Test language");
+        repos.setBranch("Test branch");
+        RepoItem repoItem = new RepoItem(repos);
+        repoItem.setOnItemClickListener(ProfileViewModel.this);
+        repoItems.add(repoItem);
+        listBinder.notifyDataChange(repoItems);
     }
 
     public LoginResponse getLoginResponse() {
@@ -156,5 +172,13 @@ public class ProfileViewModel extends ActivityViewModel<ProfileActivity> impleme
 
     public String getAvatar1() {
         return avatar1;
+    }
+
+    public ListBinder<RepoItem> getListBinder() {
+        return listBinder;
+    }
+
+    public List<RepoItem> getRepoItems() {
+        return repoItems;
     }
 }

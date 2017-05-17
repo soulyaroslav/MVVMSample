@@ -7,12 +7,11 @@
             name="viewModel"
             type="soulyaroslav.com.mvvmgithubtest.views.profile.ProfileViewModel"/>
     </data>
+
     <RelativeLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        tools:context=".ProfileActivity">
+        android:background="@android:color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,6 +23,13 @@
                 android:layout_height="200dp"
                 android:background="@color/colorAccent"
                 android:visibility="@{viewModel.isLoaded}">
+
+                <Button
+                    android:id="@+id/btnAddItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{viewModel::addItem}"
+                    android:text="Add Item"/>
 
                 <ImageView
                     android:id="@+id/ivProfilePhoto"
@@ -45,13 +51,13 @@
                 android:id="@+id/recycler"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:configuration="@{viewModel.configuration}"/>
+                app:configuration="@{viewModel.configuration}"
+                app:listBinder="@{viewModel.listBinder}"/>
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/white"
             android:visibility="@{!viewModel.isLoaded}">
 
             <ProgressBar

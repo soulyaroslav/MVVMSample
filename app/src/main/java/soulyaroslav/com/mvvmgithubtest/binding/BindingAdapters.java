@@ -6,6 +6,9 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ObservableList;
 import android.databinding.ViewDataBinding;
 import android.databinding.adapters.ListenerUtil;
+import android.support.v7.util.DiffUtil;
+import android.support.v7.util.ListUpdateCallback;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,6 +19,8 @@ import java.util.List;
 
 import soulyaroslav.com.mvvmgithubtest.BR;
 import soulyaroslav.com.mvvmgithubtest.R;
+import soulyaroslav.com.mvvmgithubtest.Utils.recycler.ListBinder;
+import soulyaroslav.com.mvvmgithubtest.adapter.RecyclerBindingAdapter;
 
 /**
  * Created by yaroslav on 4/24/17.
@@ -23,6 +28,21 @@ import soulyaroslav.com.mvvmgithubtest.R;
 
 public final class BindingAdapters {
     private BindingAdapters() {
+    }
+
+    @SuppressWarnings("unchecked")
+    @BindingAdapter("listBinder")
+    public static <E> void bindItems(RecyclerView recyclerView, final ListBinder<E> listBinder) {
+        final RecyclerBindingAdapter adapter = (RecyclerBindingAdapter) recyclerView.getAdapter();
+        if(adapter != null) {
+            listBinder.setOnUpdateAdapterContent(adapter);
+            listBinder.setOnDataChangeListener(new ListBinder.OnDataChangeListener() {
+                @Override
+                public void onChange(DiffUtil.DiffResult diffResult) {
+                    diffResult.dispatchUpdatesTo(adapter);
+                }
+            });
+        }
     }
 
     @BindingAdapter("app:image")
