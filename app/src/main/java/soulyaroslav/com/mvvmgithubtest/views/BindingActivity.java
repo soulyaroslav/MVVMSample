@@ -9,6 +9,8 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import soulyaroslav.com.mvvmgithubtest.Utils.SubscriptionUtil;
+
 /**
  * Created by yaroslav on 3/23/17.
  */
@@ -18,11 +20,14 @@ public abstract class BindingActivity<B extends ViewDataBinding, VM extends Acti
     private B binding;
     private VM viewModel;
     private Bundle bundle;
+    private SubscriptionUtil subscriptionUtil;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bundle = getIntent().getExtras();
+        // translate into base activity
+        subscriptionUtil = new SubscriptionUtil();
         bind();
     }
 
@@ -59,6 +64,12 @@ public abstract class BindingActivity<B extends ViewDataBinding, VM extends Acti
     protected void onStop() {
         super.onStop();
         viewModel.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        subscriptionUtil.clearSubscription();
     }
 
     @Override

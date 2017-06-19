@@ -8,7 +8,7 @@ import soulyaroslav.com.mvvmgithubtest.rest.response.Repos;
  * Created by yaroslav on 5/11/17.
  */
 
-public class RepoItem  {
+public class RepoItem { // repo holder
 
     private OnItemClickListener onItemClickListener;
     private Repos item;
